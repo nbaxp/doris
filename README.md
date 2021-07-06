@@ -1,3 +1,3 @@
 # doris
 
-[docke compose](https://github.com/doris/blob/master/docker-compose.yml)
+[docke compose demo](https://github.com/nbaxp/doris/blob/master/docker-compose.yml)

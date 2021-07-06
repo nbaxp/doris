@@ -1,6 +1,4 @@
 #!/bin/bash
 
-#docker tag $IMAGE_NAME $DOCKER_REPO:$DOCKER_TAG
-#docker push $IMAGE_NAME $DOCKER_REPO:$DOCKER_TAG
 docker tag $IMAGE_NAME $DOCKER_REPO:$(git rev-parse --short HEAD)
-docker push $IMAGE_NAME $DOCKER_REPO:$(git rev-parse --short HEAD)
+docker push $DOCKER_REPO:$(git rev-parse --short HEAD)

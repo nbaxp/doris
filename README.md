@@ -4,7 +4,6 @@
 ```
 ffmpeg -y -re -stream_loop -1 -i "test.mp4" -f flv -y "rtmp://host.docker.internal:8079/live/test?vhost=_"
 ```
-播放：
 rtmp: 
 ```
 rtmp://localhost:8079/live/test

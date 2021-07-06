@@ -1,0 +1,21 @@
+version: "3.8"
+services: 
+    brpc-media-server:
+        image: 76527413/brpc-media-server:latest
+        build: .
+        ports: 
+            - 8079:8079
+    ffmpeg:
+        image: jrottenberg/ffmpeg:4.1-ubuntu1804
+        volumes: 
+            - ./test.mp4:/tmp/workdir/test.mp4
+        command: -y -re -stream_loop -1 -i "test.mp4" -f flv -c copy -y "rtmp://brpc-media-server:8079/live/test?vhost=_"
+        depends_on: 
+            - brpc-media-server
+    nginx:
+        image: nginx:1.21.0
+        ports: 
+            - 80:80
+        volumes: 
+            - ./index.html:/usr/share/nginx/html/index.html
+        

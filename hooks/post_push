@@ -1,5 +1,8 @@
 #!/bin/bash
 
 docker tag $IMAGE_NAME $DOCKER_REPO:$(git rev-parse --short HEAD)
-#docker push $DOCKER_REPO:$(git rev-parse --short HEAD)
-docker image push -a $DOCKER_REPO
+docker push $DOCKER_REPO:$(git rev-parse --short HEAD)
+
+docker tag $IMAGE_NAME $DOCKER_REPO:$(date -u +"%Y-%m-%d")
+docker push $DOCKER_REPO:$(date -u +"%Y-%m-%d")
+

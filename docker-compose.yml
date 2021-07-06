@@ -1,21 +1,46 @@
 version: "3.8"
-services: 
-    brpc-media-server:
-        image: 76527413/brpc-media-server:latest
+services:
+    doris-be:
+        image: 76527413/doris:latest
         build: .
-        ports: 
-            - 8079:8079
-    ffmpeg:
-        image: jrottenberg/ffmpeg:4.1-ubuntu1804
-        volumes: 
-            - ./test.mp4:/tmp/workdir/test.mp4
-        command: -y -re -stream_loop -1 -i "test.mp4" -f flv -c copy -y "rtmp://brpc-media-server:8079/live/test?vhost=_"
+        ports:
+            - 8040:8040
+            - 8060:8060
+            - 9050:9050
+            - 9060:9060
+        environment:
+            - priority_networks=172.172.0.0/24
+        volumes:
+            #- ./be.conf:/doris/be/conf/be.conf
+            - ./tmp/data/be:/doris/be/storage
+            - ./tmp/log/be:/doris/be/log
+        command: bash -c "/doris/be/bin/start_be.sh"
+        networks:
+            default:
+                ipv4_address: 172.172.0.10
+    doris-fe:
+        image: 76527413/doris:latest
+        build: .
+        ports:
+            - 8030:8030
+            - 9010:9010
+            - 9020:9020
+            - 9030:9030
+        environment:
+            - priority_networks=172.172.0.0/24
+        volumes:
+            #- ./fe.conf:/doris/fe/conf/fe.conf
+            - ./tmp/log/fe:/doris/fe/log
+            - ./tmp/data/fe/doris-meta:/doris/fe/doris-meta
+        command: bash -c "/doris/fe/bin/start_fe.sh"
+        networks:
+            default:
+                ipv4_address: 172.172.0.11
         depends_on: 
-            - brpc-media-server
-    nginx:
-        image: nginx:1.21.0
-        ports: 
-            - 80:80
-        volumes: 
-            - ./index.html:/usr/share/nginx/html/index.html
-        
+            - doris-be
+networks:
+    default:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.172.0.0/24

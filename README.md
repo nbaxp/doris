@@ -18,5 +18,3 @@ hls:
 http://localhost:8079/live/test.m3u8?specified_host=localhost:8079
 ```
 
-### srs
-### live go

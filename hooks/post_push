@@ -1,6 +1,8 @@
 #!/bin/bash
 
-docker tag $IMAGE_NAME $DOCKER_REPO:$(date -u +"%Y-%m-%dT%H:%M:%SZ") 
+docker tag $IMAGE_NAME $DOCKER_REPO:$DOCKER_TAG
+docker tag $IMAGE_NAME $DOCKER_REPO:$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 docker tag $IMAGE_NAME $DOCKER_REPO:$(git rev-parse --short HEAD)
-docker push --all-tags $DOCKER_REPO
-
+docker push $IMAGE_NAME $DOCKER_REPO:$DOCKER_TAG
+docker push $IMAGE_NAME $DOCKER_REPO:$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+docker push $IMAGE_NAME $DOCKER_REPO:$(git rev-parse --short HEAD)

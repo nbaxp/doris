@@ -12,8 +12,8 @@ services:
             - priority_networks=172.172.0.0/24
         volumes:
             #- ./be.conf:/doris/be/conf/be.conf
-            - ./tmp/data/be:/doris/be/storage
-            - ./tmp/log/be:/doris/be/log
+            - ./data/be:/doris/be/storage
+            - ./log/be:/doris/be/log
         command: bash -c "/doris/be/bin/start_be.sh"
         networks:
             default:
@@ -30,8 +30,8 @@ services:
             - priority_networks=172.172.0.0/24
         volumes:
             #- ./fe.conf:/doris/fe/conf/fe.conf
-            - ./tmp/log/fe:/doris/fe/log
-            - ./tmp/data/fe/doris-meta:/doris/fe/doris-meta
+            - ./log/fe:/doris/fe/log
+            - ./data/fe/doris-meta:/doris/fe/doris-meta
         command: bash -c "/doris/fe/bin/start_fe.sh"
         networks:
             default:

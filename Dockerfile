@@ -12,7 +12,7 @@ FROM adoptopenjdk/openjdk11
 
 LABEL org.opencontainers.image.authors="76527413@qq.com"
 WORKDIR /doris
-COPY --from=build output .
+COPY --from=build /source/output .
 
 CMD /doris/be/bin/start_be.sh & /doris/fe/bin/start_fe.sh
 # CMD bash

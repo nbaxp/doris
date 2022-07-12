@@ -1,0 +1,24 @@
+---
+kind: pipeline
+type: docker
+name: vue3
+
+platform:
+  arch: amd64
+  os: linux
+
+steps:
+  - name: publish
+    image: plugins/docker
+    environment:
+      PLUGIN_REGISTRY: hub.nbaxp.com
+      PLUGIN_REPO: hub.nbaxp.com/demo/doris
+    settings:
+      username: admin
+      password: wanggang123!
+      tags:
+        - latest
+        - ${DRONE_STAGE_OS}-${DRONE_STAGE_ARCH}-${DRONE_REPO_BRANCH}-${DRONE_COMMIT_SHA:0:8}
+
+trigger:
+  event: [push, tag]

@@ -1,0 +1,14 @@
+FROM adoptopenjdk/openjdk11
+
+LABEL org.opencontainers.image.authors="76527413@qq.com"
+
+ENV VERSION=1.0.0
+ENV NAME=apache-doris-${VERSION}-incubating-bin
+ENV FILE=${NAME}.tar.gz
+
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/apache/doris/1.0/1.0.0-incubating/${FILE} --no-check-certificate &&\
+    tar -zxvf ${FILE} &&\
+    mv $NAME /doris &&\
+    rm -rf ${FILE}
+
+CMD /doris/be/bin/start_be.sh & /doris/fe/bin/start_fe.sh

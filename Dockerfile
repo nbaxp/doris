@@ -11,6 +11,13 @@ RUN USE_AVX2=0  sh build.sh
 FROM adoptopenjdk/openjdk11
 
 LABEL org.opencontainers.image.authors="76527413@qq.com"
+
+RUN sed -i s/archive.ubuntu.com/mirrors.ustc.edu.cn/g /etc/apt/sources.list && \
+    sed -i s/security.ubuntu.com/mirrors.ustc.edu.cn/g /etc/apt/sources.list && \
+    apt update -y && \
+    apt install -y mysql-client && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /doris
 COPY --from=build /source/output .
 
